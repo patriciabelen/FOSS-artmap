@@ -5,11 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NYC Art Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- Include library -->
-    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@3.2.0/dist/maplibre-gl.css' />
-    <script src='https://unpkg.com/maplibre-gl@3.2.0/dist/maplibre-gl.js'></script>
+    <script src="https://unpkg.com/maplibre-gl@^5.0.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@^5.0.0/dist/maplibre-gl.css" rel="stylesheet" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/@watergis/maplibre-gl-export@3.8.5/dist/maplibre-gl-export.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@watergis/maplibre-gl-export@3.8.5/dist/maplibre-gl-export.umd.js"></script>
+
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
 
     <link rel='stylesheet' href='style.css' />
@@ -18,31 +27,28 @@
 <body>
     <div id="map"></div>
 
-    <div class="map-overlay top">
+    <div class="map-overlay">
 
-            
+        
 
         <div class="map-overlay-inner">
-            <h1>ART MAP <i>or</i> MAP ART</h1>
-            <div id="box">
-                <div class="open">info +</div>
-                <div class="showpanel">            
-                    <h2>As a representational tool, this map shows the <a href="https://data.cityofnewyork.us/Recreation/New-York-City-Art-Galleries/tgyc-r5jh" target="_blank">galleries</a> and <a href="https://data.cityofnewyork.us/Recreation/New-York-City-Museums/ekax-ky3z" target="_blank">museums</a> in New York City, using data provided by NYC Open Data. The map raises questions about data collection: How does the Office of Technology and Innovation (OTI) classify <i>galleries</i> and <i>museums</i>? How is this data collected? What organizations have been excluded?</h2>
-                    <h2>This map also challenges conventional attributes of maps, particularly in free and open source software. Adjusting the sizes of the markers and colors of the map layers may yield unexpected results. These actions provoke questions relating to the visual qualities of maps: Does water necessarily have to be blue? If the water and landscape are the same color, is it still recognizable as a map? What are the elements needed for a map to be seen as such? When does this map of art organizations no longer appear as a map and instead look like art itself?</h2>
-    </div>
-            </div>
-    
+            <h1>ART MAP <span>/</span> MAP ART</h1>
+          
+                    <h2>As a representational tool and exercise in data literacy, this map shows the <a href="https://data.cityofnewyork.us/Recreation/New-York-City-Art-Galleries/tgyc-r5jh" target="_blank">galleries</a> and <a href="https://data.cityofnewyork.us/Recreation/New-York-City-Museums/ekax-ky3z" target="_blank">museums</a> in New York City, using data provided by <a href="https://opendata.cityofnewyork.us/" target="_blank">NYC Open Data</a>. While public data is a beneficial resource for communities, agencies, and citizens, the map raises questions about data sources and the cultural fabric of our city: <em>How does the Office of Technology and Innovation collect and classify galleries and museums? What organizations have been excluded? What areas of the boroughs are lacking arts organizations?</em></h2>
+                    <h2>As an interactive website, the map also challenges conventional attributes of maps, looking at how user intervention and randomized algorithms affect the visual characteristics. Using the “Random Color” button or manually adjusting the sizes of the markers and colors of the map layers may yield unexpected results. <em>Does water necessarily have to be blue? If the water and landscape are the same color, is it still recognizable as a map? What are the elements needed for a map to be seen as such? When does this map of art organizations no longer appear as a map and instead look like art itself?</em></h2>
+                    <button id="changeColorButton">RANDOM COLOR</button>
 
-        </div>
-        <div class="map-overlay-inner">
+
+            <h3>Manual Settings</h3>
+            <div class="setting">
             <label>Gallery Markers Size </label>
             <input id="slider" type="range" min="0" max="10" step="0" value="5">
-        </div>
-        <div class="map-overlay-inner">
+            </div>
+            <div class="setting">
             <label>Museum Markers Size</label>
             <input id="mslider" type="range" min="0" max="10" step="0" value="5">
-        </div>
-        <div class="map-overlay-inner">
+            </div>
+            <div class="setting">
             <fieldset>
                 <label>Change Layer Color</label>
                 <select id="layer" name="layer">
@@ -59,7 +65,7 @@
             <fieldset>
                 <div id="swatches"></div>
             </fieldset>
-        </div>
+            </div>
         </div>
 
     <!-- <div class="map-overlay top">
@@ -71,5 +77,4 @@
 
 </body>
 <script src="script.js"></script>
-
 </html>

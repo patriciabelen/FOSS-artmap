@@ -2,21 +2,10 @@ console.log('loaded!')
 console.log(maplibregl)
 
 
-$(document).ready(function(){
-    $('.open').click(function(){
-        var link = $(this);
-        $('.showpanel').slideToggle('slow', function() {
-            if ($(this).is(":visible")) {
-                 link.text('info –');                
-            } else {
-                 link.text('info +');                
-            }        
-        });
-            
-    });
+
         
 
-});
+
 
 ////////////////////////////// Add a map with demo tiles
 
@@ -39,8 +28,6 @@ $(document).ready(function(){
 const map = new maplibregl.Map({
     container: 'map', // container id
     style: 'https://api.maptiler.com/maps/3aa0af01-b868-444c-acd9-cc495d53ecf0/style.json?key=4MI1kZBuj2ZQXMrlxErQ', // style URL
-
-
     center: [-73.9522650800253, 40.75979383249296], // starting position [lng, lat]
     zoom: 11, // starting zoom
     hash: true
@@ -50,6 +37,21 @@ const map = new maplibregl.Map({
 const nav = new maplibregl.NavigationControl();
 map.addControl(nav, 'bottom-right');
 
+
+
+// PRINTING
+map.addControl(
+    new MaplibreExportControl.MaplibreExportControl({
+        PageSize: MaplibreExportControl.Size.A4,
+        PageOrientation: MaplibreExportControl.PageOrientation.Landscape,
+        Format: MaplibreExportControl.Format.PNG,
+        DPI: MaplibreExportControl.DPI[300],
+        Crosshair: true,
+        PrintableArea: true,
+        Local: 'en'
+    }),
+    'top-right'
+);
 
 
 
@@ -78,7 +80,7 @@ map.once('load',main);
 async function main(){
     //Load geojson async/await == .then(...)
 
-    let GalleryGeojson = await axios('New York City Art Galleries.geojson');
+    let GalleryGeojson = await axios('ART_GALLERY_20250108.geojson');
     map.addSource('galleries-src', {
         'type': 'geojson',
         'data': GalleryGeojson.data
@@ -98,7 +100,7 @@ async function main(){
         }
     });
 
-    let MuseumGeojson = await axios('New York City Museums.geojson');
+    let MuseumGeojson = await axios('MUSEUM_20250108.geojson');
     map.addSource('museums-src', {
         'type': 'geojson',
         'data': MuseumGeojson.data
@@ -288,8 +290,6 @@ mslider.addEventListener('input', (e) => {
             else {
                 map.setPaintProperty(layer.value, 'fill-color', color);
             }
-            
-
 
         });
         swatches.appendChild(swatch);
@@ -299,5 +299,144 @@ mslider.addEventListener('input', (e) => {
 
 
 
+$(document).ready(function(){
+
+    $("#changeColorButton").click(function() {
+// background color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var randomColor = getRandomColor();
+        $("select option").each(function() {
+            map.setPaintProperty("background", 'background-color', randomColor);
+          });
+
+// railway color
+          function getRailColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var railColor = getRailColor();
+        $("select option").each(function() {
+            map.setPaintProperty("railway", 'line-color', railColor);
+          });
+
+// border color
+        function getBorderColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var borderColor = getBorderColor();
+        $("select option").each(function() {
+            map.setPaintProperty("border_other", 'line-color', borderColor);
+          });
+
+// water color
+        function getWaterColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var waterColor = getWaterColor();
+        $("select option").each(function() {
+            map.setPaintProperty("water", 'fill-color', waterColor);
+          });
+
+// galleries circle
+        function getGalleriesColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var galleriesColor = getGalleriesColor();
+        $("select option").each(function() {
+            map.setPaintProperty("galleries", 'circle-color', galleriesColor);
+          });
+
+// museums circle
+        function getMuseumsColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
+
+        var museumsColor = getMuseumsColor();
+        $("select option").each(function() {
+            map.setPaintProperty("museums", 'circle-color', museumsColor);
+          });
+
+// residential circle
+        function getResidentialColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        var residentialColor = getResidentialColor();
+        $("select option").each(function() {
+            map.setPaintProperty("residential", 'fill-color', residentialColor);
+        });
+
+// parks landcover circle
+        function getParksColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        var parksColor = getParksColor();
+        $("select option").each(function() {
+            map.setPaintProperty("landcover", 'fill-color', parksColor);
+        });
+
+
+
+      });
+    
+
+
+
+});
+
+
+
+
 
 // to do
+// https://www.google.com/search?q=jquery+random+color+for+select+dropdown&sca_esv=13bdc68c19977ab8&sxsrf=ADLYWIIPYpSfKhkjlQblELeLmdI5VSA-ZQ%3A1736729183969&ei=X2KEZ4HsOuKJptQPhfuG0Q8&oq=jquery+random+color+for+select&gs_lp=Egxnd3Mtd2l6LXNlcnAiHmpxdWVyeSByYW5kb20gY29sb3IgZm9yIHNlbGVjdCoCCAMyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRifBUirxgJQAFi5pgJwDXgBkAEAmAFxoAH0EKoBBDIzLjK4AQPIAQD4AQGYAiagAv4RwgIEECMYJ8ICCxAAGIAEGJECGIoFwgIKEAAYgAQYQxiKBcICBRAAGIAEwgIKEAAYgAQYFBiHAsICBhAAGBYYHsICBxAjGLACGCfCAgcQABiABBgNwgIGEAAYDRgewgIMEAAYgAQYQxiKBRgKwgILEAAYgAQYhgMYigXCAggQABiABBiiBMICBRAAGO8FwgIFECEYqwKYAwCSBwQzNS4zoAeWmAE&sclient=gws-wiz-serp
+
+// https://www.google.com/search?q=jquery+random+background+color+button&sca_esv=535ca4972108ea6d&sxsrf=ADLYWIIUFgj6BKORzXQMPlfFivjthMXCWw%3A1736524178776&ei=kkGBZ8zzLqOs5NoPxaHgqQk&ved=0ahUKEwjMhMfWwOuKAxUjFlkFHcUQOJUQ4dUDCBA&uact=5&oq=jquery+random+background+color+button&gs_lp=Egxnd3Mtd2l6LXNlcnAiJWpxdWVyeSByYW5kb20gYmFja2dyb3VuZCBjb2xvciBidXR0b24yBRAAGO8FMgUQABjvBTIFEAAY7wUyCBAAGIAEGKIEMgUQABjvBUilM1C1KliAMHACeAGQAQCYAWmgAbYEqgEDNS4xuAEDyAEA-AEBmAIHoALvA8ICChAAGLADGNYEGEfCAgYQABgHGB7CAgoQIRigARjDBBgKmAMAiAYBkAYIkgcDNi4xoAfyFA&sclient=gws-wiz-serp 
+
